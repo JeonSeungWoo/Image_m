@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="board">
+
+	<insert id="insert" parameterType="BoardVO">
+		insert into
+		tbl_board(bno,title,content,insertDate)
+		values(nextval('seq_board'),#{title},#{content},now())
+	</insert>
+
+	<select id="read" resultType="BoardVO">
+		select * from tbl_board WHERE BNO =
+		#{bno}
+	</select>
+
+	<update id="update" parameterType="BoardVO">
+		UPDATE tbl_board
+		SET TITLE =
+		#{title},
+		CONTENT = #{content}
+		WHERE BNO = #{bno}
+	</update>
+
+	<delete id="delete">
+		DELETE FROM tbl_board WHERE BNO = #{bno}
+	</delete>
+
+
+	<!--List -->
+	<!--유저정보 리스트 -->
+	<select id="list" parameterType="Paging" resultType="BoardVO">
+		select
+		*
+		from tbl_board
+		<if test="sType != null">
+			<if test="sType eq 'title'.toString()">
+			 where title like '%'||#{keyword}||'%' 
+			 </if>
+			<if test="sType eq 'content'.toString()">
+			 where content like '%'||#{keyword}||'%' 
+			 </if>
+		</if>
+		
+		order by bno desc
+		LIMIT #{pageSize} OFFSET (#{page} - 1) * #{pageSize}
+	</select>
+
+	<select id="listCount" resultType="java.lang.Integer">
+		select count(1) from tbl_board
+		 <if test="sType != null">
+			<if test="sType eq 'title'.toString()">
+			 where title like '%'||#{keyword}||'%' 
+			 </if>
+			<if test="sType eq 'content'.toString()">
+			 where content like '%'||#{keyword}||'%' 
+			 </if>
+		</if>
+	</select>
+
+</mapper> 

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="img">
+
+<insert parameterType="ImgVO" id="imgInsert"> 
+insert into tbl_img(ino,bno,path,filename)
+ value
+(nextval('seq_img') ,(select bno from tbl_board order by bno desc limit 1) 
+,#{path} ,#{filename})
+</insert>
+
+
+<select id="imgReadPage" resultType="ImgVO"> 
+select ino, bno, path, filename from tbl_img where bno = #{bno} order by ino desc limit 1 
+</select>
+
+
+<select id="imgList" resultType="ImgVO"> 
+select ino, bno, path, filename from tbl_img where bno = #{bno} 
+</select>
+
+<select id="imgReadAll" resultType="ImgVO"> 
+select ino, bno, path, filename from tbl_img where bno = #{bno} and filename = #{filename}
+</select>
+
+
+<delete id="imgDelete">
+ delete from tbl_img where bno = #{bno}
+</delete>
+
+
+<insert parameterType="ImgVO" id="imgInsertOne">
+ insert into tbl_img(ino,bno,path,filename) value((nextval('seq_img'),#{bno} ,#{path} ,#{filename})
+</insert>
+
+
+<delete id="imgDeleteOne">
+ delete from tbl_img where bno = #{bno} and filename = #{filename}
+</delete>
+
+
+</mapper> 
