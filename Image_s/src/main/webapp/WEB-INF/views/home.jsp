@@ -6,9 +6,11 @@
 </head>
 <body>
 <h1>
-	Hello world!  
 </h1>
 
-<P>  The time on the server is ${serverTime}. </P>
 </body>
+<script type="text/javascript">
+	window.location.href = "/board/listPage?page=1";
+</script>
+
 </html>

@@ -4,3 +4,15 @@ title VARCHAR(200),
 content varchar(200),
 insertDate varchar(100)
 )
+
+
+create table tbl_img(
+ino int PRIMARY key,  --pk
+bno int ,             --fk 
+path varchar(400) not null,    --경로
+filename varchar(300) not null   --파일 이름.
+)
+
+CREATE SEQUENCE seq_img START 1;
+
+CREATE SEQUENCE seq_board START 1;
