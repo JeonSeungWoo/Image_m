@@ -19,10 +19,7 @@ public class ImgDAOImpl implements ImgDAO{
 	public void imgInsert(ImgVO vo) throws Exception {
 		session.insert("img.imgInsert",vo);
 	}
-	@Override
-	public ImgVO imgMain(int bno) throws Exception {
-		return session.selectOne("img.imgMain",bno);
-	}
+	
 	@Override
 	public List<ImgVO> imgList(int bno) throws Exception {
 		return session.selectList("img.imgList",bno);
@@ -41,6 +38,16 @@ public class ImgDAOImpl implements ImgDAO{
 		map.put("bno", Integer.toString(bno));
 		map.put("fileName", filename);
 		session.delete("img.imgDeleteOne",map);
+	}
+
+	@Override
+	public ImgVO imgShow(int bno,String filename) throws Exception {
+		// TODO Auto-generated ethod stub
+		HashMap<String, String> map =  new HashMap<String, String>();
+		map.put("bno", Integer.toString(bno));
+		map.put("filename", filename);
+		
+		return session.selectOne("img.imgShow",map);
 	}
 
 

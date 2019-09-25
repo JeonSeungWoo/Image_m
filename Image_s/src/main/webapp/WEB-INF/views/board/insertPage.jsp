@@ -7,8 +7,8 @@
 <title>등록</title>
 </head>
 <body>
-<form id="form" action="" method="get" enctype="multipart/form-data">
-<!--  action="/board/insert" -->
+<form id="form" action="/board/insert" method="get" enctype="multipart/form-data">
+
 <table border="1">
 <tr>
 <th>제목 </th>
@@ -62,7 +62,7 @@ $("#addBtn").on("click",function() {
 
 $("#removeBtn").on("click", function() {
 	/*전체 제거  */
-	/* $("#Form *").remove(); */
+	/* $("#divForm *").remove(); */
 	$(".file"+numCheck).remove(); 
 	numCheck = numCheck-1;
 });

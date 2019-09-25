@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.spring.woo.domain.BoardVO;
 import org.spring.woo.domain.Paging;
 import org.spring.woo.service.BoardService;
+import org.spring.woo.service.ImgService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,10 @@ public class BoardController {
 	//service 가져오기
 	@Inject
 	private BoardService service;
+	
+	@Inject
+	private ImgService iservice;
+	
 	
 	//insertPage설정.(view.board.insertPage로 경로가 설정 되어 있다.)
 	//web.xmp에서 확인 가능.
@@ -59,7 +64,7 @@ public class BoardController {
 
 	@RequestMapping(value = "/listPage", method = RequestMethod.GET)
 	public void listPage(Model model,int page,Paging paging) throws Exception {
-		
+		                                                                                                                                                        
 		model.addAttribute("list",service.list(paging));
 		model.addAttribute("Paging", new Paging(page, service.listCount()));
 	}

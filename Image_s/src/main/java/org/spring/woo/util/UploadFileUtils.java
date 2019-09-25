@@ -23,7 +23,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 public class UploadFileUtils {
     
-	  public static String uploadFile(String uploadPath,
+	//이미지를 보여준다.(경로와 파일이름을 파라미터로 넣어 줘야 한다.)
+	public @ResponseBody byte[] show(String path,String fileName)throws Exception {
+		InputStream in;
+		String noImg = "C:\\TEMP\\noImage.png";
+		//이미지가 있을 때
+		if (fileName != null) {
+			in = new FileInputStream(path + fileName);
+		} else {
+			//이미지가 없을 때.
+			in = new FileInputStream(noImg);
+		}
+		//IO 스트림 조작 유틸.(toByteArray는 in을 인코딩.)
+		byte[] result = IOUtils.toByteArray(in);
+		in.close();
+		return result;
+	}
+	
+	
+	//등록
+	public static String uploadFile(String uploadPath,
 	                              String originalName,
 	                              byte[] fileData)throws Exception{
 	    UUID uid = UUID.randomUUID();

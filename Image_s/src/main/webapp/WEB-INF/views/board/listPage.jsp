@@ -155,10 +155,11 @@
 </tr>
  <c:forEach items="${list}" var="list">
  <tr>
-<th><a href="/board/read?page=${param.page}&bno=${list.bno}">
-  ${list.bno}</a></th>
-<th>${list.title}</th>
-<th>${list.content}</th>
+<td><a href="/board/read?page=${param.page}&bno=${list.bno}">${list.bno}</a></td>
+  
+<td><img id="img" alt="image" src="/upload/show?bno=${list.bno}"></td> 
+<td>${list.title}</td>
+<td>${list.content}</td>
 </tr>
   </c:forEach>
 </table>
