@@ -12,8 +12,8 @@ public interface ImgDAO {
 	public void imgDelete(int bno)throws Exception;
 	//수정 처리.(수정은 삭제후 인설트)
 	public void imgInsertOne(ImgVO vo)throws Exception;
-	public void imgDeleteOne(int bno,String filename)throws Exception;
+	public void imgDeleteOne(ImgVO vo)throws Exception;
 	//이미지를 보여주는 쿼리
-	public ImgVO imgShow(int bno,String filename)throws Exception;
+	public ImgVO imgShow(ImgVO vo)throws Exception;
 	
 }

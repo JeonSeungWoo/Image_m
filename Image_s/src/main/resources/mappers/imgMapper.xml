@@ -20,7 +20,10 @@ select ino, bno, path, filename from tbl_img where bno = #{bno}
 
 <!--이미지 보여주는 쿼리. -->
 <select id="imgShow" resultType="ImgVO"> 
-select ino, bno, path, filename from tbl_img where bno = #{bno} and filename = #{filename}
+select ino, bno, path, filename 
+from tbl_img
+ where bno = #{bno} 
+and filename = #{filename}
 </select>
 
 

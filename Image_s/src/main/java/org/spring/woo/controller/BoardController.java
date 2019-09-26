@@ -45,6 +45,7 @@ public class BoardController {
 	//read기능 bno를 파라미터로 가져와야 한다.
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public void readPage(Model model, @RequestParam("bno") int bno) throws Exception {
+		model.addAttribute("list", iservice.imgList(bno));
 		model.addAttribute("vo", service.read(bno));
 	}
 

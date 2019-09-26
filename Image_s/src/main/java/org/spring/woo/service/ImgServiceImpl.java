@@ -23,6 +23,7 @@ public class ImgServiceImpl implements ImgService {
 
 	@Override
 	public List<ImgVO> imgList(int bno) throws Exception {
+		
 		return dao.imgList(bno);
 	}
 
@@ -37,16 +38,15 @@ public class ImgServiceImpl implements ImgService {
 	}
 
 	@Override
-	public void imgDeleteOne(int bno, String filename) throws Exception {
-		dao.imgDeleteOne(bno, filename);
+	public void imgDeleteOne(ImgVO vo) throws Exception {
+		dao.imgDeleteOne(vo);
 	}
 
 
 
 	@Override
-	public ImgVO imgShow(int bno,String filename) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.imgShow(bno,filename);
+	public ImgVO imgShow(ImgVO vo) throws Exception {
+		return dao.imgShow(vo);
 	}
 
 }

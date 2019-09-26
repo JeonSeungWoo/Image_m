@@ -33,21 +33,13 @@ public class ImgDAOImpl implements ImgDAO{
 		session.insert("img.imgInsertOne",vo);
 	}
 	@Override
-	public void imgDeleteOne(int bno, String filename) throws Exception {
-		HashMap<String,String> map = new HashMap<String, String>();
-		map.put("bno", Integer.toString(bno));
-		map.put("fileName", filename);
-		session.delete("img.imgDeleteOne",map);
+	public void imgDeleteOne(ImgVO vo) throws Exception {
+		session.delete("img.imgDeleteOne",vo);
 	}
 
 	@Override
-	public ImgVO imgShow(int bno,String filename) throws Exception {
-		// TODO Auto-generated ethod stub
-		HashMap<String, String> map =  new HashMap<String, String>();
-		map.put("bno", Integer.toString(bno));
-		map.put("filename", filename);
-		
-		return session.selectOne("img.imgShow",map);
+	public ImgVO imgShow(ImgVO vo) throws Exception {
+		return session.selectOne("img.imgShow",vo);
 	}
 
 

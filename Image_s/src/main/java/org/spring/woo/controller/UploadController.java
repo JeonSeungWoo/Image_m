@@ -1,13 +1,10 @@
 package org.spring.woo.controller;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
-
 import javax.inject.Inject;
 
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.spring.woo.domain.ImgVO;
 import org.spring.woo.service.ImgService;
 import org.spring.woo.util.UploadFileUtils;
 import org.springframework.stereotype.Controller;
@@ -41,11 +38,14 @@ public class UploadController {
 
 	@ResponseBody
 	@RequestMapping(value = "/showAll")
-	public byte[] showAll(@RequestParam("bno") int bno, @RequestParam("fileName") String fileName)
+	public byte[] showAll(@RequestParam("bno") int bno, @RequestParam("filename") String filename)
 			throws Exception {
 		UploadFileUtils upload = new UploadFileUtils();
-		String path  = imgService.imgShow(bno,fileName).getPath();
-		byte[] result = upload.show(path, fileName);
+		ImgVO vo =  new ImgVO();
+		vo.setBno(bno);
+		vo.setFilename(filename);
+		String path  = imgService.imgShow(vo).getPath();
+		byte[] result = upload.show(path, filename);
 		return result;
 	}
 
