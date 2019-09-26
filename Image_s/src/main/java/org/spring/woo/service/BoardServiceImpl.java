@@ -64,8 +64,21 @@ public class BoardServiceImpl implements BoardService {
 		dao.update(vo);
 	}
 
+	@Transactional
 	@Override
 	public void delete(int bno) throws Exception {
+		List<ImgVO> list = idao.imgList(bno);
+		System.out.println("imgList  ::  " + idao.imgList(bno));
+        String location = "";
+		String fileName = "";	
+		UploadFileUtils util =  new UploadFileUtils();
+		//for문 스타트
+		for (int i = 0; i < list.size(); i++) {
+		location = list.get(i).getPath();
+		fileName = list.get(i).getFilename();
+		util.deleteFile(location, fileName);
+		}
+		idao.imgDelete(bno);
 		dao.delete(bno);
 	}
 

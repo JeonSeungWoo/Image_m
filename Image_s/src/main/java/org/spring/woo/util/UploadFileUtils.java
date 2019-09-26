@@ -9,20 +9,20 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.IOUtils;
 import org.imgscalr.Scalr;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.spring.woo.domain.ImgVO;
 import org.springframework.http.MediaType;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 public class UploadFileUtils {
-    
+	private static final Logger logger = LoggerFactory.getLogger(UploadFileUtils.class);
+	
 	//이미지를 보여준다.(경로와 파일이름을 파라미터로 넣어 줘야 한다.)
 	public @ResponseBody byte[] show(String path,String fileName)throws Exception {
 		InputStream in;
@@ -39,7 +39,6 @@ public class UploadFileUtils {
 		in.close();
 		return result;
 	}
-	
 	
 	//등록
 	public static String uploadFile(String uploadPath,
@@ -64,6 +63,8 @@ public class UploadFileUtils {
 	    return uploadedFileName;
 	  }
 
+	
+      //파일처리	
 	  private static  String makeIcon(String uploadPath,
 	      String path,
 	      String fileName)throws Exception{
@@ -71,7 +72,7 @@ public class UploadFileUtils {
 	    return iconName.substring(uploadPath.length()).replace(File.separatorChar, '/');
 	  }
 
-
+      //썸네일 처리
 	  private static  String makeThumbnail(
 	              String uploadPath,
 	              String path,
@@ -92,7 +93,7 @@ public class UploadFileUtils {
 	        uploadPath.length()).replace(File.separatorChar, '/');
 	  }
 
-
+      //날짜 처리
 	  public static String calcPath(String uploadPath){
 	    Calendar cal = Calendar.getInstance();
 	    String yearPath = File.separator+cal.get(Calendar.YEAR);
@@ -106,8 +107,8 @@ public class UploadFileUtils {
 	    return datePath;
 	  }
 
-
-	  private static void makeDir(String uploadPath, String... paths){
+    //퐁더 만들기
+	    private static void makeDir(String uploadPath, String... paths){
 	    if(new File(paths[paths.length-1]).exists()){
 	      return;
 	    }
@@ -119,7 +120,7 @@ public class UploadFileUtils {
 	    }
 	  }
 	  
-	  
+	  //Img type check
 		public static MediaType getMediaType(String type){
 			
 			Map<String, MediaType> mediaMap = new HashMap<String, MediaType>();		
@@ -130,4 +131,18 @@ public class UploadFileUtils {
 			return mediaMap.get(type.toUpperCase());
 		}
 	  
+		//삭제 처리
+		public void deleteFile(String location,String fileName) {
+			File file = new File(location + fileName);	
+			if(file.exists()) {
+				if(file.delete()) {
+					logger.info("파일삭제 성공");
+				}else {
+					logger.info("파이삭제 실패");
+				}
+			}else {
+				logger.info("파일이 존재하지 않습니다.");
+			}
+		}
+		
 }

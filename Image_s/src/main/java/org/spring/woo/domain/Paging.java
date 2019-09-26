@@ -34,20 +34,16 @@ public class Paging {
 		
 		//올림.(0.1~0.9 = 1*10 ,1.1~1.9 = 2*10)
 		int tempEnd = (int)(Math.ceil(page/10.0) * 10);
-		
 		//시작페이지 
 		startPage = tempEnd -9;
 		
 		//이전 클릭시 (페이지가 1일때는 prev가 보이면 안된다.)
 		prev = startPage == 1 ? false : true;
-		
 		//끝나는 페이지 설정. 완전히 마지막 페이지.
 		if(tempEnd * pageSize >= totalPage){
-			 
 			endPage = (int)(Math.ceil(totalPage/pageSize)+1);
 			//완전히 마지막에서는 next가 보이면 안된다.
 			next = false;
-			
 		}else{
 			endPage = tempEnd;
 			next = true;

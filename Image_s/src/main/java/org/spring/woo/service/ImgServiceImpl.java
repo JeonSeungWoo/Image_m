@@ -30,6 +30,9 @@ public class ImgServiceImpl implements ImgService {
 	@Override
 	public void imgDelete(int bno) throws Exception {
 		dao.imgDelete(bno);
+		
+		
+		
 	}
 
 	@Override

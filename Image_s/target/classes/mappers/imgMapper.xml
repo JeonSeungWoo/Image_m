@@ -26,7 +26,7 @@ from tbl_img
 and filename = #{filename}
 </select>
 
-
+<!--전체  -->
 <delete id="imgDelete">
  delete from tbl_img where bno = #{bno}
 </delete>
@@ -36,7 +36,7 @@ and filename = #{filename}
  insert into tbl_img(ino,bno,path,filename) values((nextval('seq_img'),#{bno} ,#{path} ,#{filename})
 </insert>
 
-
+<!--한개  -->
 <delete id="imgDeleteOne">
  delete from tbl_img where bno = #{bno} and filename = #{filename}
 </delete>
