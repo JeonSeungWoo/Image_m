@@ -22,9 +22,9 @@ public class UploadController {
 	private ImgService imgService;
 
 	// 대표이미지 보여주기
-	@ResponseBody
+	
 	@RequestMapping(value = "/show")
-	public byte[] show(@RequestParam("bno") int bno) throws Exception {
+	public @ResponseBody byte[] show(@RequestParam("bno") int bno) throws Exception {
 		String path = "";
 		String fileName = "";
 		UploadFileUtils upload = new UploadFileUtils();
@@ -36,9 +36,9 @@ public class UploadController {
 		return result;
 	}
 
-	@ResponseBody
+	
 	@RequestMapping(value = "/showAll")
-	public byte[] showAll(@RequestParam("bno") int bno, @RequestParam("filename") String filename)
+	public @ResponseBody byte[] showAll(@RequestParam("bno") int bno, @RequestParam("filename") String filename)
 			throws Exception {
 		UploadFileUtils upload = new UploadFileUtils();
 		ImgVO vo =  new ImgVO();

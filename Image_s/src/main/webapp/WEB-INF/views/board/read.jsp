@@ -16,9 +16,13 @@
 		<input type="hidden" name="bno" id="bno" value="${vo.bno}">
 		<ul>
 			<c:forEach items="${list}" var="list">
-				<li><img class="img" style="width: 300px; height: 300px;" alt="${list.filename}"
+				<li><img class="img" style="width: 300px; height: 300px;"
+					alt="${list.filename}"
 					src="/upload/showAll?bno=${vo.bno}&filename=${list.filename}">
-				</li>	
+					<a class="btn" href="/upload/showAll?bno=${vo.bno}&filename=${list.filename}" download>PDF 다운로드</a>
+
+				</li>
+			
 			</c:forEach>
 
 		</ul>
@@ -41,9 +45,20 @@
 
 	<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".img").on("click", function() {
+				var src = $(this).attr("src");
+				alert("src : " + src);
+				downloadUrl = src;
+				var downloadFrame = document.createElement("iframe"); 
+				downloadFrame.setAttribute('src',downloadUrl);
+				downloadFrame.setAttribute('class',"screenReaderText"); 
+				document.body.appendChild(downloadFrame); 
 
+			});
 
-</script>
+		});
+	</script>
 
 </body>
 </html>

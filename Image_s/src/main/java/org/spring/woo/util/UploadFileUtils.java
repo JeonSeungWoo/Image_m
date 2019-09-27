@@ -60,6 +60,8 @@ public class UploadFileUtils {
 	    }else{
 	      uploadedFileName = makeIcon(uploadPath, savedPath, savedName);
 	    }
+	    
+	    
 	    return uploadedFileName;
 	  }
 
