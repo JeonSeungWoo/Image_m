@@ -47,7 +47,7 @@ public class BoardController {
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public void readPage(Model model, @RequestParam("bno") int bno) throws Exception {
 		List<ImgVO> list = iservice.imgList(bno);
-		
+		System.out.println("list  : " + list);
 		model.addAttribute("list", list);
 		model.addAttribute("vo", service.read(bno));
 	}

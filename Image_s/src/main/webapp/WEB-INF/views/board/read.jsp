@@ -17,10 +17,8 @@
 		<ul>
 			<c:forEach items="${list}" var="list">
 				<li><img class="img" style="width: 300px; height: 300px;"
-					alt="${list.filename}"
-					src="/upload/showAll?bno=${vo.bno}&filename=${list.filename}">
-					<a class="btn" href="/upload/showAll?bno=${vo.bno}&filename=${list.filename}" download>PDF 다운로드</a>
-
+					alt="${list.filename}" src="/upload/file?bno=${vo.bno}&filename=${list.filename}">
+					
 				</li>
 			
 			</c:forEach>
@@ -48,13 +46,14 @@
 		$(document).ready(function() {
 			$(".img").on("click", function() {
 				var src = $(this).attr("src");
-				alert("src : " + src);
-				downloadUrl = src;
-				var downloadFrame = document.createElement("iframe"); 
-				downloadFrame.setAttribute('src',downloadUrl);
-				downloadFrame.setAttribute('class',"screenReaderText"); 
-				document.body.appendChild(downloadFrame); 
-
+                window.location.href = src;
+			});
+			
+			$(".fileBtn").on("click",function(){
+				var path = $(this).attr("value");
+				var name = $(this).attr("data-value");
+				alert(path + name);
+				
 			});
 
 		});
