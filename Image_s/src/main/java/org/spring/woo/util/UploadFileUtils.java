@@ -40,49 +40,43 @@ public class UploadFileUtils {
 //		return result;
 //	}
 
-	//이미지를 보여주고 파일도 다운된다.
-	public ResponseEntity<Resource>
-	fileShow(String userAgent,String path,String fileName) throws Exception{
-        Resource resource = new FileSystemResource(path + fileName);
-		
-		if(resource.exists() == false) {
+	// 이미지를 보여주고 파일도 다운된다.
+	public ResponseEntity<Resource> fileShow(String reqHeader, String path, String fileName) throws Exception {
+		Resource resource = new FileSystemResource(path + fileName);
+		if (resource.exists() == false) {
 			return new ResponseEntity<Resource>(HttpStatus.OK);
 		}
-		
 		String resorceName = resource.getFilename();
-        String resorceOriName = resorceName.substring(resorceName.indexOf("_")+1); 
-		
+		String resorceOriName = resorceName.substring(resorceName.indexOf("_") + 1);
 		HttpHeaders headers = new HttpHeaders();
-		//에외 처리
+		// 에외 처리
 		try {
 			String downloadName = null;
-			//@RequestHeader를 이용해서 브라우저 종류나 모바일 데스크톱 프로그램 종류 구분.
-			//IE Browser
-			if (userAgent.contains("Trident")) {
-				downloadName = URLEncoder.encode(resorceOriName,"UTF-8").replaceAll("\\+"," ");
-			}else if (userAgent.contains("Edge")) {
-				downloadName = URLEncoder.encode(resorceOriName,"UTF-8");
-			}else if (userAgent.contains("Chrome")) {
-				downloadName = new String(resorceOriName.getBytes("UTF-8"), "ISO-8859-1"); 
-			}else{
-				//예외는 이름이 깨지더라도 Chrome 설정.
-				downloadName = new String(resorceOriName.getBytes("UTF-8"), "ISO-8859-1"); 
+			// @RequestHeader를 이용해서 브라우저 종류나 모바일 데스크톱 프로그램 종류 구분.
+			// IE Browser
+			if (reqHeader.contains("Trident")) {
+				downloadName = URLEncoder.encode(resorceOriName, "UTF-8").replaceAll("\\+", " ");
+			} else if (reqHeader.contains("Edge")) {
+				downloadName = URLEncoder.encode(resorceOriName, "UTF-8");
+			} else if (reqHeader.contains("Chrome")) {
+				downloadName = new String(resorceOriName.getBytes("UTF-8"), "ISO-8859-1");
+			} else {
+				// 예외는 이름이 깨지더라도 Chrome 설정.
+				downloadName = new String(resorceOriName.getBytes("UTF-8"), "ISO-8859-1");
 			}
-			
-			headers.add("Content-Disposition",
-					"attachment; filename=" + downloadName);
-			System.out.println("downloadName : " + downloadName);
+
+			headers.add("Content-Disposition", "attachment; filename=" + downloadName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return new ResponseEntity<Resource>(resource,headers,HttpStatus.OK);
+		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
+
 	
 	
-	
-	// 등록
-	public static String uploadFile(String uploadPath, String originalName, byte[] fileData) throws Exception {
+	//파일 저장.
+	public static String saveFile(String uploadPath, String originalName, byte[] fileData) throws Exception {
 		UUID uid = UUID.randomUUID();
 		String savedName = uid.toString() + "_" + originalName;
 		String savedPath = calcPath(uploadPath);

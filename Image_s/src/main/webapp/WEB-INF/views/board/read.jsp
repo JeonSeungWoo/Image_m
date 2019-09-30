@@ -48,14 +48,6 @@
 				var src = $(this).attr("src");
                 window.location.href = src;
 			});
-			
-			$(".fileBtn").on("click",function(){
-				var path = $(this).attr("value");
-				var name = $(this).attr("data-value");
-				alert(path + name);
-				
-			});
-
 		});
 	</script>
 

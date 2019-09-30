@@ -38,7 +38,7 @@ public class BoardServiceImpl implements BoardService {
 			String originalName = file.get(i).getOriginalFilename();
 			byte[] fileData = file.get(i).getBytes();
 			// 유틸시작
-			String uploadedFileName = UploadFileUtils.uploadFile(uploadPath, originalName, fileData);
+			String uploadedFileName = UploadFileUtils.saveFile(uploadPath, originalName, fileData);
 			String path = uploadPath + uploadedFileName.substring(0, 12);
 			String saveFileName = uploadedFileName.substring(uploadedFileName.lastIndexOf("/") + 1);
 			String formatName = originalName.substring(originalName.lastIndexOf(".") + 1);
