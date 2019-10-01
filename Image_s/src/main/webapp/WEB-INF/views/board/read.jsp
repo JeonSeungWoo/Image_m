@@ -12,13 +12,14 @@
 
 
 
-	<form id="form">
+	<form id="form" method="get"enctype="multipart/form-data">
 		<input type="hidden" name="bno" id="bno" value="${vo.bno}">
 		<ul>
 			<c:forEach items="${list}" var="list">
 				<li><img class="img" style="width: 300px; height: 300px;"
 					alt="${list.filename}" src="/upload/file?bno=${vo.bno}&filename=${list.filename}">
 					
+				<a href="/upload/imgDelete?bno=${vo.bno}&filename=${list.filename}" style="z-index: 1;">X</a>
 				</li>
 			
 			</c:forEach>
@@ -28,7 +29,15 @@
 
 
 
+		<div id="divForm">
+			<input type="file" id="file" class="file" name="file">
+		</div>
 
+		<button type="button" id="addBtn">추가</button>
+
+		<button type="button" id="removeBtn">제거</button>
+
+		<button type="submit" id="insertBtn">등록</button>
 
 
 
@@ -48,6 +57,40 @@
 				var src = $(this).attr("src");
                 window.location.href = src;
 			});
+		
+			var form = $("#form");
+			var numCheck = 0;
+
+			$("#insertBtn").on("click", function() {
+				//이미지의 값 중 빈값이 있으면 등록 되지 않도록 구현한다.
+				var fileVal = $('[name="file"]').val();
+				if (fileVal == "" || fileVal == null) {
+					alert("이미지를 1개 이상 등록해 주세요.");
+				} else {
+					form.attr("action", "/upload/insertImage");
+					form.attr("method", "POST");
+					form.submit();
+				}
+
+			});
+
+			$("#addBtn")
+					.on(
+							"click",
+							function() {
+								numCheck = numCheck + 1;
+								var txt = '<input type="file" id="file" class="file'+numCheck+'" name="file"> '
+								$("#divForm").append(txt);
+							});
+
+			$("#removeBtn").on("click", function() {
+				/*전체 제거  */
+				/* $("#divForm *").remove(); */
+				$(".file" + numCheck).remove();
+				numCheck = numCheck - 1;
+			});
+		
+		
 		});
 	</script>
 

@@ -1,6 +1,6 @@
 package org.spring.woo.controller;
 
-import java.net.URLEncoder;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -9,10 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.spring.woo.domain.ImgVO;
 import org.spring.woo.service.ImgService;
 import org.spring.woo.util.UploadFileUtils;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequestMapping("/upload/*")
 @Controller
@@ -64,25 +62,45 @@ public class UploadController {
 	}
 
 	@RequestMapping(value = "/imgDelete")
-	public String imgDelete(int bno, String fileName) throws Exception {
-
-//		String location = imgService.imgMain(bno).getPath();
-//		File file = new File(location + fileName);
-//		if (file.exists()) {
-//			if (file.delete()) {
-//				System.out.println("파일삭제 성공");
-//			} else {
-//				System.out.println("파이삭제 실패");
-//
-//			}
-//		} else {
-//			System.err.println("파일이 존재하지 아늡니다.");
-//		}
-//
-//		imgService.imgDeleteOne(bno, fileName);
-
+	public String imgDelete(@RequestParam("bno")int bno,  @RequestParam("filename")String filename) throws Exception {
+		ImgVO vo = new ImgVO();
+		UploadFileUtils upload = new UploadFileUtils();
+		vo.setBno(bno);
+		vo.setFilename(filename);
+		String location = imgService.imgShow(vo).getPath();
+		upload.deleteFile(location, filename);
+		imgService.imgDeleteOne(vo);
 		return "redirect:/board/read?bno=" + bno;
-
 	}
+	
+	// insertImage
+		@RequestMapping(value = "/insertImage")
+		public String insertImage(int bno, List<MultipartFile> file) throws Exception {
+			System.out.println("뭐여?");
+			ImgVO ivo = new ImgVO();
+			ivo.setBno(bno);
+			System.out.println(ivo);
+
+			for (int i = 0; i < file.size(); i++) {
+				String originalName = file.get(i).getOriginalFilename();
+				byte[] fileData = file.get(i).getBytes();
+				// 유틸시작
+				String uploadedFileName = UploadFileUtils.saveFile("C:\\Temp", originalName, fileData);
+				String path = "C:\\Temp" + uploadedFileName.substring(0, 12);
+				String saveFileName = uploadedFileName.substring(uploadedFileName.lastIndexOf("/") + 1);
+				String formatName = originalName.substring(originalName.lastIndexOf(".") + 1);
+				//확장자 null 체크
+				System.out.println(formatName);
+				if (formatName == null || formatName.equals("")) {
+				}else{
+					ivo.setFilename(saveFileName);
+					ivo.setPath(path);
+					imgService.imgInsertOne(ivo);
+				}
+			}
+			return "redirect:/board/read?page=1&bno=" + bno;
+
+		}
+
 
 }

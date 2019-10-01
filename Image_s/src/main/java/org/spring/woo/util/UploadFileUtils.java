@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UploadFileUtils {
 	private static final Logger logger = LoggerFactory.getLogger(UploadFileUtils.class);
 
-	// 순수 이미지를 보여준다.(경로와 파일이름을 파라미터로 넣어 줘야 한다.)
+	// byte type show
 //	public @ResponseBody byte[] show(String path, String fileName) throws Exception {
 //		InputStream in;
 //		in = new FileInputStream(path + fileName);
@@ -40,7 +40,7 @@ public class UploadFileUtils {
 //		return result;
 //	}
 
-	// 이미지를 보여주고 파일도 다운된다.
+	// ResponseEntity show 
 	public ResponseEntity<Resource> fileShow(String reqHeader, String path, String fileName) throws Exception {
 		Resource resource = new FileSystemResource(path + fileName);
 		if (resource.exists() == false) {

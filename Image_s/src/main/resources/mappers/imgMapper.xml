@@ -33,7 +33,7 @@ and filename = #{filename}
 
 
 <insert parameterType="ImgVO" id="imgInsertOne">
- insert into tbl_img(ino,bno,path,filename) values((nextval('seq_img'),#{bno} ,#{path} ,#{filename})
+ insert into tbl_img(ino,bno,path,filename) values(nextval('seq_img'),#{bno} ,#{path} ,#{filename})
 </insert>
 
 <!--한개  -->
