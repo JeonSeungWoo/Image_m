@@ -37,10 +37,18 @@ public class UploadController {
 		String path = "";
 		String fileName = "";
 		UploadFileUtils upload = new UploadFileUtils();
-		if (imgService.imgList(bno) != null) {
+		System.out.println(imgService.imgList(bno));
+		fileName = imgService.imgList(bno).get(0).getFilename();
+		String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
+		
+		if (UploadFileUtils.getMediaType(formatName) != null) {
 			path = imgService.imgList(bno).get(0).getPath();
 			fileName = imgService.imgList(bno).get(0).getFilename();
+		}else{
+			path ="C:\\Temp\\";
+			fileName = "a.png";
 		}
+		
 		ResponseEntity<Resource> result = upload.fileShow(userAgent, path, fileName);
 		return result;
 	}
@@ -56,7 +64,16 @@ public class UploadController {
 		ImgVO vo = new ImgVO();
 		vo.setBno(bno);
 		vo.setFilename(filename);
-		String path = imgService.imgShow(vo).getPath();
+		String path = "";
+		String formatName = filename.substring(filename.lastIndexOf(".") + 1);
+		
+		if (UploadFileUtils.getMediaType(formatName) != null) {
+			path = imgService.imgShow(vo).getPath();
+			filename = imgService.imgShow(vo).getFilename();
+		}else{
+			path ="C:\\Temp\\";
+			filename = "a.png";
+		}
 		ResponseEntity<Resource> result = upload.fileShow(userAgent, path, filename);
 		return result;
 	}
@@ -75,7 +92,7 @@ public class UploadController {
 	
 	// insertImage
 		@RequestMapping(value = "/insertImage")
-		public String insertImage(int bno, List<MultipartFile> file) throws Exception {
+		public String insertImage(int bno, @RequestParam("file")List<MultipartFile> file) throws Exception {
 			System.out.println("¹¹¿©?");
 			ImgVO ivo = new ImgVO();
 			ivo.setBno(bno);

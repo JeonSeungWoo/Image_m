@@ -14,14 +14,15 @@
 
 	<form id="form" method="get"enctype="multipart/form-data">
 		<input type="hidden" name="bno" id="bno" value="${vo.bno}">
+		<input type="hidden" id="listSize" value="${listSize}">
 		<ul>
-			<c:forEach items="${list}" var="list">
+			<c:forEach items="${list}" var="list" >
 				<li><img class="img" style="width: 300px; height: 300px;"
 					alt="${list.filename}" src="/upload/file?bno=${vo.bno}&filename=${list.filename}">
 					
-				<a href="/upload/imgDelete?bno=${vo.bno}&filename=${list.filename}" style="z-index: 1;">X</a>
+				<button type="button" class="deleteImg" value="${vo.bno}" data-value="${list.filename}">X</button>
 				</li>
-			
+				
 			</c:forEach>
 
 		</ul>
@@ -39,11 +40,6 @@
 
 		<button type="submit" id="insertBtn">등록</button>
 
-
-
-
-
-
 	</form>
 
 
@@ -60,7 +56,19 @@
 		
 			var form = $("#form");
 			var numCheck = 0;
-
+             
+			
+			$(".deleteImg").on("click",function(){	
+				var bno =$(this).attr("value");
+				var filename = $(this).attr("data-value");
+				var count =  $("#listSize").val();
+				if(count == 1 ){
+					alert("사진이 1개이상 있어야 합니다.");
+				}else{
+					form.attr("action","/upload/imgDelete?bno="+bno+"&filename="+filename).attr("method","post").submit(); 	
+				}
+			});
+			
 			$("#insertBtn").on("click", function() {
 				//이미지의 값 중 빈값이 있으면 등록 되지 않도록 구현한다.
 				var fileVal = $('[name="file"]').val();
